@@ -6,7 +6,7 @@ exit
 fi 
 echo "starting uncover engine-----------------------------------------------------------------------------------------------"
 uncover -q $1 -e shodan -o $1+ip.txt
-censys search ' services.tls.certificates.leaf_data.subject_dn: $1' --index-type hosts | jq -c '.[] | {ip: .ip}'  >> ip.txt
+censys search ' services.tls.certificates.leaf_data.subject.common_name: $1' --index-type hosts | jq -c '.[] | {ip: .ip}'  >> ip.txt
 sed -i 's/[^0-9,.]*//g' $1+2ip.txt
 cat $1+2ip.txt | naabu >> $1+ip.txt
 rm $1+2ip.txt
